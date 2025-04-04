@@ -13,7 +13,7 @@ def stock_debate(request):
         result = crawl_toss_comments(company_name)
 
         if result.get('success'):
-            comments = Crawling.objects.all()
+            comments = Crawling.objects.filter(company_name=company_name).order_by('-pk')[:8]
             context = {
                 'company_name': result['company_name'],
                 'stock_code': result['stock_code'],
