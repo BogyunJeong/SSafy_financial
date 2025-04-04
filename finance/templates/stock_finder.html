@@ -1,34 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SSAFY Finance System</title>
+  <title>SSAFY Finance System</title> 
+  <!-- 아래 부분이 Bootstrap script css Link 부분입니다.-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
 </head>
 <body>
+  <!-- 아래 부분이 Nav를 담당하는는 부분입니다.-->
   <nav class="navbar navbar-expand-lg bg-info-subtle mb-5">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url "crawlings:index" %}">SSAFY Bank</a>
+      <!-- 아래 부분이 index로 넘어가게 하는 홈 버튼 부분입니다. nav의 왼쪽끝 부분입니다.-->
+      <a class="navbar-brand justify-content-start d-flex" href="{% url "crawlings:index" %}">SSAFY Finance</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+      <!-- 아래 부분이 센터에 있는 주 메뉴 선택 부분입니다. nav의 중앙 부분입니다.-->
+      <div class="collapse navbar-collapse justify-content-center d-flex" id="navbarCenter">
         <div class="navbar-nav">
           <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Stock debate</a>
           <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Custom Center</a>
         </div>
       </div>
+      <!-- 아래 부분이 회원 정보, 마이페이지 등을 담당할 nav의 오른쪽 끝 부분입니다.-->
+      <div class="collapse navbar-collapse justify-content-end d-flex" id="navbarRight">
+        <div class="navbar-nav">
+          {% if request.user.is_authenticated %}
+          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">My page</a>
+          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Log out</a>
+          {% else %}
+          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">log In</a>
+          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Sign Up</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </nav>
+  <!-- 아래 부분이 다른 탬플릿에서 사용한 content 부분입니다.-->
   {% block content %}
+  
   {% endblock content %}
 
-  <footer class="bg-info-subtle w-100 text-center bottom-0 pt-4 pb-3 text-white">
-    ⓒ 2025 SSAFY Investment Bank, All right reserved<br>
-    고객센터 대표 번호: 1234-5678 | 문의 이메일: example@ssafyinvestbank.com
+  <!-- 아래 부분이 footer 부분입니다.-->
+  <footer class="bg-info-subtle w-100 text-center bottom-0 mt-5 pt-4 pb-3 text-black">
+    ⓒ 2025 SSAFY Investment Site, All right reserved<br>
+    고객센터 대표 번호: 1234-5678 | 문의 이메일: example@ssafyinvest.com
   </footer>
 
+  <!-- 아래 부분이 Bootstrap script Load 부분입니다.-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
 </body>
 </html>
