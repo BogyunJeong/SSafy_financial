@@ -1,0 +1,23 @@
+{% extends "stock_finder.html" %}
+
+{% block content %}
+<header>
+  <h1 class="h1">주식 댓글 분석기</h1>
+  <p>해당 주식 항목의 댓글들을 AI 분석하여 정리하는 페이지 입니다.</p>
+</header>
+
+<form action="{% url "crawlings:stock_debate" %}">
+  {% csrf_token %}
+  <div class="container">
+    <div class="row">
+      <div class="input-group mb-3 justify-content-center col-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">주식 종목 입력</span>
+        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-primary btn-outline-secondary text-white" type="submit" id="button-addon2">분석 시작</button>
+      </div>
+    </div>
+  </div>
+  {{ form.as_p }}
+</form>
+
+{% endblock content %}
