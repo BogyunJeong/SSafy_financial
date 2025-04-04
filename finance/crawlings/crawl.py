@@ -70,18 +70,19 @@ def crawl_toss_comments(company_name):
         comment_elements = driver.find_elements(By.CSS_SELECTOR,
         '#stock-content article a > span:nth-child(2) > span')
         comments = [el.text.strip() for el in comment_elements if el.text.strip()]
-        print(f"✅ [8] 댓글 수집 완료: {len(comments)}개")
+        print(f"✅ [7] 댓글 수집 완료: {len(comments)}개")
 
         # ✅ 8. DB 저장
         saved_comments = [
             Crawling(
-                company_title=company_name,
+                company_name=company_name,
                 stock_code=stock_code,
                 comment=comment_text,
                 save_at=datetime.now()
             )
             for comment_text in comments
         ]
+        print(f"✅ [8] DB 저장")
         Crawling.objects.bulk_create(saved_comments)
 
         return {

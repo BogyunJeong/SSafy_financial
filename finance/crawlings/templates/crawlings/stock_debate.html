@@ -24,26 +24,42 @@
       </div>
     </div>
   </div>
+  
 
   <!--아래는 댓글을 받아와서 출력할 구역입니다.-->
   <div class="container">
     <div class="row">
       {% if success %}
-  <div class="alert alert-success mt-4 text-center">
-    ✅ {{ company_name }} ({{ stock_code }}) 종목 댓글 {{ saved_count }}개 저장 완료!
-  </div>
-{% elif error %}
-  <div class="alert alert-danger mt-4 text-center">
-    ❌ 오류 발생: {{ error }}
-  </div>
-{% endif %}
-      {% for comment in comments %}
-      <div>
-        {{ comment.comment }}
+        <div class="alert alert-success mt-4 text-center">
+          ✅ {{ company_name }} ({{ stock_code }}) 종목 댓글 {{ saved_count }}개 저장 완료!
+        </div>
+      {% elif error %}
+        <div class="alert alert-danger mt-4 text-center">
+          ❌ 오류 발생: {{ error }}
+        </div>
+      {% endif %}
       </div>
-      {% endfor %}
     </div>
+  </form>
+
+<div class="container">
+  <div class="row">  
+    <h3 class="h3">조회된 회사 명: {{ company_name }}</h3>
+    <h5 class="h5">종목 코드: {{ stock_code }}</h5>
+    <hr>
+    {% for comment in comments %}
+    <div>
+      <form action="{% url "crawlings:delete" comment.pk %}" method="POST">
+        {% csrf_token %}
+        {{ comment.comment }}
+        <button class="btn bg-danger btn-outline-secondary btn-sm text-white " type="submit" id="button-addon2">삭제</button>
+      </form>
+      <hr>
+    </div>
+    {% endfor %}
   </div>
+</div>
+
 
   <!--아래는 AI에게 출력하게 할 구역입니다.-->
   <div class="container">
@@ -52,6 +68,6 @@
       <p>테스트용 예시 문구입니다.</p>
     </div>
   </div>
-</form>
+
 
 {% endblock content %}

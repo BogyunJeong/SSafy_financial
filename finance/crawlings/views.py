@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Crawling
 from .crawl import crawl_toss_comments
 from datetime import datetime
@@ -13,10 +13,11 @@ def stock_debate(request):
         result = crawl_toss_comments(company_name)
 
         if result.get('success'):
+            comments = Crawling.objects.all()
             context = {
-                'success': True,
                 'company_name': result['company_name'],
                 'stock_code': result['stock_code'],
+                'comments': comments,
                 'saved_count': result['saved_count'],  # 추가됨
                 'save_at': datetime.now()
             }
@@ -24,15 +25,33 @@ def stock_debate(request):
 
     context = {
         'success': False,
-        'error': '크롤링 실패 또는 유효하지 않은 종목명입니다.'
+        'error': '현재 조회된 기업 정보가 없습니다. 기업 정보를 입력시켜주세요.'
     }
     return render(request, 'crawlings/stock_debate.html', context)
 
+def delete(request, pk):
+    crawling = Crawling.objects.get(pk=pk)
+    company_name = crawling.company_name  # 삭제 전에 회사명 저장
+    crawling.delete()  # 삭제 실행
 
+    # 삭제 후 남은 댓글들 조회
+    comments = Crawling.objects.filter(company_name=company_name)
 
+    # 댓글이 없다면 초기화 화면으로
+    if not comments.exists():
+        context = {
+            'success': False,
+            'error': '현재 조회된 기업 정보가 없습니다. 기업 정보를 입력시켜주세요.'
+        }
+        return render(request, 'crawlings/stock_debate.html', context)
 
+    # 댓글이 존재하면 그대로 렌더링
+    stock_code = comments.first().stock_code  # 이 시점엔 first()가 절대 None 아님
 
-def delete_comment(request):
-    pass
+    context = {
+        'company_name': company_name,
+        'stock_code': stock_code,
+        'comments': comments,
+    }
 
-
+    return render(request, 'crawlings/stock_debate.html', context)

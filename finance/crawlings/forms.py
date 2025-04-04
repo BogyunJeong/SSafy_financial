@@ -8,5 +8,5 @@ class CrawlingForm(forms.ModelForm):
 
         # 위젯
         widget= {
-            'company_title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '제목을 입력하세요'}),
+            'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '제목을 입력하세요'}),
         }
