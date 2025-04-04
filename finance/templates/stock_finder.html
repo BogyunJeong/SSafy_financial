@@ -20,18 +20,18 @@
       <div class="collapse navbar-collapse justify-content-center d-flex" id="navbarCenter">
         <div class="navbar-nav">
           <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Stock debate</a>
-          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Custom Center</a>
+          <a class="nav-link" href="#">Custom Center</a>
         </div>
       </div>
       <!-- 아래 부분이 회원 정보, 마이페이지 등을 담당할 nav의 오른쪽 끝 부분입니다.-->
       <div class="collapse navbar-collapse justify-content-end d-flex" id="navbarRight">
         <div class="navbar-nav">
           {% if request.user.is_authenticated %}
-          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">My page</a>
-          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Log out</a>
+          <a class="nav-link" href="#">My page</a>
+          <a class="nav-link" href="#">Log out</a>
           {% else %}
-          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">log In</a>
-          <a class="nav-link" href="{% url "crawlings:stock_debate" %}">Sign Up</a>
+          <a class="nav-link" href="#">log In</a>
+          <a class="nav-link" href="#">Sign Up</a>
           {% endif %}
         </div>
       </div>
